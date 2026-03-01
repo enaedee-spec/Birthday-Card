@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Birthday Card</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- COVER PAGE -->
+  <div class="card" id="cover-page">
+    <h2>A surprise for you 💗</h2>
+    <p style="margin-bottom: 40px; color: #F56CA4;">— From your love</p>
+    <button onclick="showPage('pin-page')">Open 💖</button>
+  </div>
+
+  <!-- PIN PAGE -->
+  <div class="card" id="pin-page" style="display:none;">
+    <h2>Enter PIN 💗</h2>
+    <input type="password" id="pin-input" maxlength="4" autocomplete="off" />
+    <div class="pin-buttons"></div>
+    <button onclick="submitPin()">Submit 💗</button>
+    <p id="pin-status" style="color: #F56CA4;"></p>
+  </div>
+
+  <!-- GAME PAGE -->
+  <div class="card" id="game-page" style="display:none;">
+    <h2>Catch 5 Hearts 💕</h2>
+    <p>Score: <span id="score">0 / 5</span></p>
+    <div id="gameArea"></div>
+    <button id="game-next-btn" style="display:none;" onclick="showPage('wish-page')">Next 💗</button>
+  </div>
+
+  <!-- WISH PAGE -->
+  <div class="card" id="wish-page" style="display:none;">
+    <h2>Happy Birthday My Love 🥺💖</h2>
+    <p>Hai cintaku 💕</p>
+    <p>Hari ini dunia jadi lebih indah</p>
+    <button onclick="showPage('memory-page')">Next 💗</button>
+  </div>
+
+  <!-- MEMORIES GALLERY PAGE -->
+  <div class="card" id="memory-page" style="display:none;">
+    <h2>Our Memories 🥰✨</h2>
+    <img id="gallery-photo" src="photo1.jpg" class="memory-photo">
+    <div style="margin-top:16px;">
+      <button id="next-photo-btn" onclick="nextPhoto()">Next Photo</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
