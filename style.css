@@ -1,0 +1,62 @@
+body {
+  background: #fff;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card {
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.12);
+  padding: 32px 24px;
+  margin-top: 32px;
+  text-align: center;
+  width: 340px;
+  min-height: 320px;
+}
+
+h2 {
+  color: #F56CA4;
+  font-size: 1.5em;
+  margin-bottom: 16px;
+}
+
+.memory-photo {
+  width: 90%;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+button {
+  background: #F56CA4;
+  color: white;
+  font-size: 1em;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  margin-top: 24px;
+}
+
+.pin-buttons {
+  margin-top: 20px;
+}
+
+.pin-buttons button {
+  width: 56px;
+  height: 56px;
+  margin: 6px;
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: 50%;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pin-buttons button:active, .pin-buttons button.selected {
+  background: #B4DAF8;
+}

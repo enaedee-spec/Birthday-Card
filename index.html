@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Birthday Card</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- PIN Page -->
+  <div class="card" id="pin-page">
+    <h2>Enter PIN 💗</h2>
+    <input type="password" id="pin-input" maxlength="4" style="font-size:2em; text-align:center;" />
+    <div class="pin-buttons"></div>
+    <button onclick="submitPin()">Submit 💗</button>
+    <p id="pin-status" style="color: #F56CA4;"></p>
+  </div>
+
+  <!-- Catch Mini Heart -->
+  <div class="card" id="game-page" style="display:none;">
+    <h2>Catch 5 Hearts 💕</h2>
+    <p>Score: <span id="score">0 / 5</span></p>
+    <div id="gameArea"></div>
+    <button id="game-next-btn" style="display:none;" onclick="showPage('wish-page')">Next 💗</button>
+  </div>
+
+  <!-- Wish Page -->
+  <div class="card" id="wish-page" style="display:none;">
+    <h2>Happy Birthday My Love 🥺💖</h2>
+    <p>Hai cintaku 💕</p>
+    <p>Hari ini dunia jadi lebih indah</p>
+    <button onclick="showPage('memory-page')">Next 💗</button>
+  </div>
+
+  <!-- Our Memory Page -->
+  <div class="card" id="memory-page" style="display:none;">
+    <h2>Our Memory 🥰✨</h2>
+    <img src="your-photo.jpg" class="memory-photo">
+    <!-- You can add a final message or button here if you want -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
