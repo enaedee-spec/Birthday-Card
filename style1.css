@@ -1,0 +1,137 @@
+// ----- PAGE NAVIGATION -----
+function showPage(pageId) {
+  document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+  document.getElementById(pageId).style.display = 'block';
+  if (pageId === 'game-page') startGame();
+  if (pageId === 'pin-page') {
+    document.getElementById('pin-input').value = '';
+    document.getElementById('pin-status').textContent = '';
+  }
+  if (pageId === 'memory-page') {
+    currentPhotoIdx = 0;
+    document.getElementById('gallery-photo').src = galleryPhotos[currentPhotoIdx];
+    updatePhotoBtn();
+  }
+}
+
+// ----- ON LOAD -----
+document.addEventListener('DOMContentLoaded', () => {
+  showPage('cover-page');
+  // PIN pad grid
+  let pinArea = document.querySelector('.pin-buttons');
+  pinArea.innerHTML = '';
+  let btnOrder = [1,2,3,4,5,6,7,8,9,'',0,''];
+  for (let i=0; i < btnOrder.length; i++) {
+    if (btnOrder[i] === '') {
+      pinArea.innerHTML += `<span style="opacity:0;"></span>`;
+      continue;
+    }
+    pinArea.innerHTML += `<button class="pin-btn" onclick="addPin('${btnOrder[i]}')">${btnOrder[i]}</button>`;
+  }
+});
+
+// ----- PIN PAD LOGIC -----
+function addPin(num) {
+  let pinInput = document.getElementById('pin-input');
+  if(pinInput.value.length < 4){
+    pinInput.value += num;
+  }
+}
+
+function submitPin() {
+  let pin = document.getElementById('pin-input').value;
+  let pinStatus = document.getElementById('pin-status');
+  if(pin === "1234"){ // <-- change your secret PIN here!
+    pinStatus.textContent = "Access granted! 🎉";
+    setTimeout(() => showPage('game-page'), 800);
+  } else {
+    pinStatus.textContent = "Wrong PIN, try again!";
+  }
+}
+
+// ----- HEARTS GAME -----
+let score = 0;
+const requiredScore = 5;
+const emojis = ['💗', '💔', '😊', '😍', '🥺', '🍀', '⭐', '😻'];
+const goodEmoji = '💗';
+let heartsFallingTimer = null;
+
+function startGame() {
+  score = 0;
+  updateScore();
+  document.getElementById('gameArea').innerHTML = '';
+  document.getElementById('game-next-btn').style.display = 'none';
+  startFallingHearts();
+}
+
+function startFallingHearts() {
+  clearInterval(heartsFallingTimer); // stop previous game
+  heartsFallingTimer = setInterval(dropEmoji, 900);
+}
+
+function dropEmoji() {
+  if(score >= requiredScore) {
+    clearInterval(heartsFallingTimer);
+    document.getElementById('game-next-btn').style.display = 'inline-block';
+    return;
+  }
+  const em = emojis[Math.floor(Math.random() * emojis.length)];
+  const card = document.getElementById('gameArea');
+  const emojiElem = document.createElement('span');
+  emojiElem.textContent = em;
+  emojiElem.style.position = 'absolute';
+  emojiElem.style.left = Math.random() * (card.clientWidth - 40) + 'px';
+  emojiElem.style.top = '0px';
+  emojiElem.style.fontSize = '2em';
+  emojiElem.style.cursor = 'pointer';
+
+  emojiElem.onclick = () => {
+    if(em === goodEmoji) {
+      score++;
+      updateScore();
+      emojiElem.remove();
+      if(score >= requiredScore) {
+        clearInterval(heartsFallingTimer);
+        document.getElementById('game-next-btn').style.display = 'inline-block';
+      }
+    } else {
+      emojiElem.style.animation = 'shake 0.3s';
+      setTimeout(() => emojiElem.style.animation = '', 300);
+    }
+  };
+  card.appendChild(emojiElem);
+  // Animate down
+  let pos = 0;
+  const speed = 2 + Math.random() * 2.5;
+  const fallInterval = setInterval(() => {
+    if(score >= requiredScore) {
+      clearInterval(fallInterval);
+      emojiElem.remove();
+      return;
+    }
+    pos += speed;
+    emojiElem.style.top = pos + 'px';
+    if(pos > card.clientHeight) {
+      emojiElem.remove();
+      clearInterval(fallInterval);
+    }
+  }, 20);
+}
+function updateScore() {
+  document.getElementById('score').textContent = `${score} / ${requiredScore}`;
+}
+
+// ----- MEMORIES GALLERY -----
+const galleryPhotos = ["photo1.jpg", "photo2.jpg", "photo3.jpg"]; // <-- Add your image filenames here!
+let currentPhotoIdx = 0;
+
+function nextPhoto() {
+  currentPhotoIdx++;
+  if(currentPhotoIdx >= galleryPhotos.length) currentPhotoIdx = 0; // Loop to first image
+  document.getElementById('gallery-photo').src = galleryPhotos[currentPhotoIdx];
+  updatePhotoBtn();
+}
+
+function updatePhotoBtn() {
+  document.getElementById('next-photo-btn').style.display = galleryPhotos.length > 1 ? 'inline-block' : 'none';
+}
